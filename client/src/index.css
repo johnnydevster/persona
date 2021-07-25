@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .shape {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - 30px),
+      calc(50% + 370px) 100%,
+      47% calc(100% - 27px),
+      calc(50% - 370px) 100%,
+      0 calc(100% - 30px)
+    );
+  }
+}
