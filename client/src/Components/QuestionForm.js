@@ -8,93 +8,87 @@ import {
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    largeRadioButtonRed: {
-      "& svg": {
-        width: "2.5em",
-        height: "2.5em",
-        color: "rgba(245, 0, 0)",
-      },
-    },
-    mediumRadioButtonRed: {
-      "& svg": {
-        width: "1.5em",
-        height: "1.5em",
-        color: "rgba(245, 0, 0)",
-      },
-    },
-    largeRadioButtonGreen: {
-      "& svg": {
-        width: "2.5em",
-        height: "2.5em",
-        color: "rgba(0, 215, 0)",
-      },
-    },
-    mediumRadioButtonGreen: {
-      "& svg": {
-        width: "1.5em",
-        height: "1.5em",
-        color: "rgba(0, 215, 0)",
-      },
-    },
-  })
-);
-
 function QuestionForm() {
-  const classes = useStyles();
   const [value, setValue] = useState();
 
   function handleChange(e) {
     console.log(e.target.value);
   }
   return (
-    <div className="mb-96">
-      <div className="w-full h-10 bg-gradient-to-r from-red-400 to-green-400"></div>
-      <FormControl
-        component="fieldset"
-        className="w-full flex justify-center mx-auto"
-      >
-        <RadioGroup
-          className="flex items-center justify-center"
-          row
-          aria-label="gender"
-          name="gender1"
-          value={value}
-          onChange={handleChange}
-        >
-          <FormControlLabel
-            labelPlacement="top"
+    <div className="mb-12 bg-gray-50 pt-3 pb-5 px-3">
+      <h2 className="text-lg text-gray-600 pb-4">
+        1. Du gillar att stå i centrum
+      </h2>
+      <form className="sm:flex justify-between text-sm align-middle">
+        <div className="flex sm:flex-col items-center sm:w-1/6 mt-3 mx-4 sm:m-0 text-red-600">
+          <input
+            type="radio"
+            name="first option"
             value="1"
-            control={<Radio />}
-            className={classes.largeRadioButtonRed}
+            className="transform scale-200 sm:mt-3 sm:order-last cursor-pointer"
+            onChange={(e) => {
+              console.log(e.target.value);
+            }}
           />
-          <FormControlLabel
-            labelPlacement="top"
+          <label className="sm:order-first pl-4 sm:p-0">
+            Stämmer inte alls
+          </label>
+        </div>
+        <div className="flex sm:flex-col items-center sm:w-1/6 mt-3 mx-4 sm:m-0 text-red-400">
+          <input
+            type="radio"
+            name="first option"
             value="2"
-            control={<Radio />}
-            className={classes.mediumRadioButtonRed}
+            className="transform scale-200 sm:mt-3 cursor-pointer"
+            onChange={(e) => {
+              console.log(e.target.value);
+            }}
           />
-          <FormControlLabel
-            className="text-gray-500"
-            labelPlacement="top"
+          <label className="sm:order-first pl-4 sm:p-0">Stämmer ej</label>
+        </div>
+        <div className="flex sm:flex-col items-center mt-3 mx-4 sm:m-0 sm:w-1/6">
+          <input
+            type="radio"
+            name="first option"
             value="3"
-            control={<Radio />}
+            className="transform scale-200 sm:mt-3 cursor-pointer"
+            onChange={(e) => {
+              console.log(e.target.value);
+            }}
           />
-          <FormControlLabel
-            labelPlacement="top"
+          <label className="sm:order-first text-gray-600 pl-4 sm:p-0">
+            Vet ej
+          </label>
+        </div>
+        <div className="flex sm:flex-col items-center mt-3 mx-4 sm:m-0 sm:w-1/6">
+          <input
+            type="radio"
+            name="first option"
             value="4"
-            control={<Radio />}
-            className={classes.mediumRadioButtonGreen}
+            className="transform scale-200 sm:mt-3 cursor-pointer"
+            onChange={(e) => {
+              console.log(e.target.value);
+            }}
           />
-          <FormControlLabel
-            labelPlacement="top"
+          <label className="sm:order-first text-green-600 pl-4 sm:p-0">
+            Stämmer
+          </label>
+        </div>
+        <div className="flex sm:flex-col items-center mt-3 mx-4 sm:m-0 sm:w-1/6">
+          <input
+            type="radio"
+            name="first option"
             value="5"
-            control={<Radio />}
-            className={classes.largeRadioButtonGreen}
+            className="transform scale-200 sm:mt-3 cursor-pointer"
+            onChange={(e) => {
+              console.log(e.target.value);
+            }}
           />
-        </RadioGroup>
-      </FormControl>
+          <label className="sm:order-first text-green-500 pl-4 sm:p-0">
+            Stämmer bra
+          </label>
+        </div>
+      </form>
     </div>
   );
 }

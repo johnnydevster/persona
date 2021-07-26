@@ -59,7 +59,10 @@ function App() {
             Ta ställning istället för att svara neutralt
           </div>
         </div>
-        <QuestionForm />
+        <div className="mt-10 mb-96">
+          <QuestionForm />
+          <QuestionForm />
+        </div>
       </section>
     </div>
   );
