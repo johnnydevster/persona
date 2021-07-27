@@ -1,6 +1,14 @@
 import QuestionForm from "./Components/QuestionForm.js";
+import Questions from "./Data/questions";
+import { useState, useEffect } from "react";
 
 function App() {
+  const [answers, setAnswers] = useState([]);
+
+  useEffect(() => {
+    console.log(answers);
+  }, [answers]);
+
   return (
     <div>
       <header className="bg-blue-500 h-12 flex items-center">
@@ -60,8 +68,18 @@ function App() {
           </div>
         </div>
         <div className="mt-10 mb-96">
-          <QuestionForm />
-          <QuestionForm />
+          {Questions.map((question, index) => {
+            return (
+              <QuestionForm
+                questionNr={index + 1}
+                id={question.id}
+                question={question.question}
+                factor={question.factor}
+                answers={answers}
+                setAnswers={setAnswers}
+              />
+            );
+          })}
         </div>
       </section>
     </div>
