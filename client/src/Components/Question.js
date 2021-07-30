@@ -4,9 +4,10 @@ function Question(props) {
   const ref = useRef(null);
 
   useEffect(() => {
+    // If this is the first unanswered question when trying to submit the form, scroll to it
     if (props.firstUnanswered) {
-      console.log(props.id + " fired, but didn't scroll");
       ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      props.setUnansweredQuestionIds([]);
     }
   });
 
@@ -17,10 +18,14 @@ function Question(props) {
     // 3 = Conscientiousness
     // 4 = Neuroticism
     // 5 = Openness
+
     const score = Number(e.target.value);
     const reversedScale = [6, 5, 4, 3, 2, 1];
     let finalScore;
     let factor;
+
+    // These checks are in place to determine which big five personality factor was answered.
+    // Also, if the factor is negative, the score scale is reversed.
 
     if (Math.abs(props.factor) === 1) {
       props.factor > 0
@@ -56,17 +61,24 @@ function Question(props) {
     };
 
     props.setAnswers([
+      // Ensure that the question hasn't already been answered first
       ...props.answers.filter((object) => {
         return object.id !== questionAnswer.id;
       }),
       questionAnswer,
     ]);
+
     props.setUnansweredQuestionIds(
       props.unansweredQuestionIds.filter((id) => id !== props.id)
     );
   }
   return (
-    <div ref={ref} className="mb-12 bg-gray-50 pt-3 pb-5 px-3">
+    <div
+      ref={ref}
+      className={`mb-12 pt-3 pb-5 px-3 ${
+        props.unansweredFlag ? "bg-red-50" : "bg-gray-50"
+      }`}
+    >
       <h2 className="text-lg text-gray-600 pb-4">
         <span className="text-base text-gray-400 mr-1">
           {props.questionNr}.
