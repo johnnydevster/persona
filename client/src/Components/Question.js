@@ -1,6 +1,15 @@
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 
-function QuestionForm(props) {
+function Question(props) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (props.firstUnanswered) {
+      console.log(props.id + " fired, but didn't scroll");
+      ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+
   function handleChange(e) {
     // Factors explanation
     // 1 = Extraversion
@@ -48,13 +57,16 @@ function QuestionForm(props) {
 
     props.setAnswers([
       ...props.answers.filter((object) => {
-        return object.id != questionAnswer.id;
+        return object.id !== questionAnswer.id;
       }),
       questionAnswer,
     ]);
+    props.setUnansweredQuestionIds(
+      props.unansweredQuestionIds.filter((id) => id !== props.id)
+    );
   }
   return (
-    <div className="mb-12 bg-gray-50 pt-3 pb-5 px-3">
+    <div ref={ref} className="mb-12 bg-gray-50 pt-3 pb-5 px-3">
       <h2 className="text-lg text-gray-600 pb-4">
         <span className="text-base text-gray-400 mr-1">
           {props.questionNr}.
@@ -125,4 +137,4 @@ function QuestionForm(props) {
   );
 }
 
-export default QuestionForm;
+export default Question;

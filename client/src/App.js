@@ -1,13 +1,29 @@
-import QuestionForm from "./Components/QuestionForm.js";
-import Questions from "./Data/questions";
-import { useState, useEffect } from "react";
+import Question from "./Components/Question.js";
+import { questions, testAnswers } from "./Data/questions";
+import { useState, useEffect, useRef } from "react";
 
 function App() {
-  const [answers, setAnswers] = useState([]);
+  const [answers, setAnswers] = useState(testAnswers);
+  const [unansweredQuestionIds, setUnansweredQuestionIds] = useState([]);
+  const [calculatingResults, setCalculatingResults] = useState(false);
 
-  useEffect(() => {
-    console.log(answers);
-  }, [answers]);
+  useEffect(() => {}, [answers]);
+
+  function calculateResults() {
+    // First check if all questions are answered
+    const unansweredQuestions = questions.filter(
+      (question) => !answers.some((answer) => question.id === answer.id)
+    );
+    if (unansweredQuestions.length > 0) {
+      setUnansweredQuestionIds(
+        unansweredQuestions.map((question) => question.id)
+      );
+
+      console.log("Seems like you haven't answered some questions!");
+    } else {
+      console.log("All questions answered.");
+    }
+  }
 
   return (
     <div>
@@ -67,20 +83,39 @@ function App() {
             Ta ställning istället för att svara neutralt
           </div>
         </div>
-        <div className="mt-10 mb-96">
-          {Questions.map((question, index) => {
+        <div className="mt-10 mb-10">
+          {questions.map((question, index) => {
+            /*
+            console.log("Question ID: " + question.id);
+            console.log(
+              `First unanswered: ${unansweredQuestionIds[0] === question.id}`
+            );
+            console.log(
+              "Is unanswered: " + unansweredQuestionIds.includes(question.id)
+            );
+            */
             return (
-              <QuestionForm
+              <Question
                 questionNr={index + 1}
+                firstUnanswered={unansweredQuestionIds[0] === question.id}
+                unansweredFlag={unansweredQuestionIds.includes(question.id)}
                 id={question.id}
                 question={question.question}
                 factor={question.factor}
                 answers={answers}
                 setAnswers={setAnswers}
+                unansweredQuestionIds={unansweredQuestionIds}
+                setUnansweredQuestionIds={setUnansweredQuestionIds}
               />
             );
           })}
         </div>
+        <button
+          onClick={calculateResults}
+          className="mb-20 h-12 px-8 rounded text-white text-lg hover:bg-green-400 bg-green-500 mx-auto block"
+        >
+          Beräkna resultat
+        </button>
       </section>
     </div>
   );
