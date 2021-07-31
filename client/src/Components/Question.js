@@ -7,7 +7,7 @@ function Question(props) {
     // If this is the first unanswered question when trying to submit the form, scroll to it
     if (props.firstUnanswered) {
       ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
-      props.setUnansweredQuestionIds([]);
+      props.setFirstUnanswered(null);
     }
   });
 
@@ -75,7 +75,7 @@ function Question(props) {
   return (
     <div
       ref={ref}
-      className={`mb-12 pt-3 pb-5 px-3 ${
+      className={`transition-all duration-500 ease-in-out mb-12 pt-3 pb-5 px-3 ${
         props.unansweredFlag ? "bg-red-50" : "bg-gray-50"
       }`}
     >
@@ -117,7 +117,7 @@ function Question(props) {
             onChange={(e) => handleChange(e)}
           />
           <label className="sm:order-first text-gray-600 pl-4 sm:p-0">
-            Vet ej
+            Varken eller
           </label>
         </div>
         <div className="flex sm:flex-col items-center mt-3 mx-4 sm:m-0 sm:w-1/6">

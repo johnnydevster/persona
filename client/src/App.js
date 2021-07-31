@@ -6,6 +6,7 @@ import xIcon from "./Static/X-icon.png";
 function App() {
   const [answers, setAnswers] = useState(testAnswers);
   const [unansweredQuestionIds, setUnansweredQuestionIds] = useState([]);
+  const [firstUnanswered, setFirstUnanswered] = useState();
   const [unansweredWarning, setUnansweredWarning] = useState(false);
   const [calculatingResults, setCalculatingResults] = useState(false);
 
@@ -28,29 +29,12 @@ function App() {
       setUnansweredQuestionIds(
         unansweredQuestions.map((question) => question.id)
       );
+      setFirstUnanswered(unansweredQuestions[0].id);
       setUnansweredWarning(true);
       console.log("Seems like you haven't answered some questions!");
     } else {
       console.log("All questions answered.");
     }
-  }
-
-  function UnansweredWarning() {
-    if (unansweredWarning) {
-      return (
-        <div className="transition-all duration-500 ease-in-out transform -translate-x-1/2 -translate-y-1/2 fixed text-white rounded flex items-center w-2/6 h-22 bg-opacity-90 p-10 top-1/2 left-1/2 bg-red-500 z-20">
-          <div className="absolute right-0 top-0 p-2 cursor-pointer">
-            <img
-              onClick={() => setUnansweredWarning(false)}
-              src={xIcon}
-              className="w-8"
-            />
-          </div>
-          <h2>Ser ut som att du missat att svara på vissa frågor!</h2>
-        </div>
-      );
-    }
-    return null;
   }
 
   return (
@@ -112,8 +96,8 @@ function App() {
           </div>
         </div>
         <div className="mt-10 mb-10">
-          <UnansweredWarning />
           {questions.map((question, index) => {
+            /*
             console.log("Question ID: " + question.id);
             console.log(
               `First unanswered: ${unansweredQuestionIds[0] === question.id}`
@@ -121,30 +105,47 @@ function App() {
             console.log(
               "Is unanswered: " + unansweredQuestionIds.includes(question.id)
             );
+            */
 
             return (
               <Question
                 questionNr={index + 1}
-                firstUnanswered={unansweredQuestionIds[0] === question.id}
+                firstUnanswered={firstUnanswered === question.id}
+                setFirstUnanswered={setFirstUnanswered}
                 unansweredFlag={unansweredQuestionIds.includes(question.id)}
                 id={question.id}
                 question={question.question}
                 factor={question.factor}
                 answers={answers}
                 setAnswers={setAnswers}
-                unansweredQuestionIds={unansweredQuestionIds}
                 setUnansweredQuestionIds={setUnansweredQuestionIds}
+                unansweredQuestionIds={unansweredQuestionIds}
               />
             );
           })}
         </div>
         <button
           onClick={calculateResults}
-          className="mb-20 h-12 px-8 rounded text-white text-lg hover:bg-green-400 bg-green-500 mx-auto block"
+          className="transition-all duration-500 ease-in-out mb-20 h-12 px-8 rounded text-white text-lg hover:bg-green-400 bg-green-500 mx-auto block"
         >
           Beräkna resultat
         </button>
       </section>
+      {/* Display warning below if not all questions are answered */}
+      <div
+        className={`${
+          unansweredWarning ? "h-22 p-10 opacity-100" : "h-0 opacity-0"
+        } transition-opacity duration-500 ease-out transform -translate-x-1/2 -translate-y-1/2 fixed text-white rounded flex items-center bg-opacity-90 top-1/2 left-1/2 bg-red-500 z-20`}
+      >
+        <div className="absolute right-0 top-0 p-2 cursor-pointer">
+          <img
+            onClick={() => setUnansweredWarning(false)}
+            src={xIcon}
+            className="w-7"
+          />
+        </div>
+        <h2>Ser ut som att du missat att svara på vissa frågor!</h2>
+      </div>
     </div>
   );
 }
