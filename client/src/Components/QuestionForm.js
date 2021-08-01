@@ -37,9 +37,13 @@ function QuestionForm(props) {
         "http://localhost:3001/results",
         answers
       );
-      console.log(response.data);
-      console.log("All questions answered.");
+      props.setResults(response.data);
+      props.setLoading(false);
     }
+  }
+
+  if (props.loading || props.results) {
+    return null;
   }
 
   return (
@@ -99,7 +103,7 @@ function QuestionForm(props) {
           );
           */
           return (
-            <div>
+            <div key={question.id}>
               <Question
                 questionNr={index + 1}
                 firstUnanswered={firstUnanswered === question.id}

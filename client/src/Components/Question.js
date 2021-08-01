@@ -63,6 +63,7 @@ function Question(props) {
 
     props.setAnswers([
       // Ensure that the question hasn't already been answered first
+      // If it has, just replace it
       ...props.answers.filter((object) => {
         return object.id !== questionAnswer.id;
       }),

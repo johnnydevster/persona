@@ -1,13 +1,47 @@
-import Question from "./Components/Question.js";
-import { questions, testAnswers } from "./Data/questions";
 import { useState, useEffect, useRef } from "react";
-import xIcon from "./Static/X-icon.png";
 import QuestionForm from "./Components/QuestionForm";
 import SyncLoader from "react-spinners/SyncLoader";
+import ResultsDisplay from "./Components/ResultsDisplay";
+import { Transition } from "@tailwindui/react";
 
 function App() {
-  const [calculatingResults, setCalculatingResults] = useState(false);
+  const [results, setResults] = useState();
+  /*
+  const [results, setResults] = useState({
+    agreeableness: 0.34,
+    conscientiousness: 0.78,
+    extraversion: 0.22,
+    neuroticism: 0.84,
+    openness: 0.9, 
+  });
+  */
   const [loading, setLoading] = useState(false);
+
+  function ShowLoading() {
+    if (loading) {
+      return (
+        <div className="text-center p-20">
+          <SyncLoader loading={loading} color="#00AAFF" />
+          <p
+            className={`${
+              loading ? "opacity-100" : "opacity-0"
+            } transition-all duration-700 ease-in-out p-10 text-gray-500`}
+          >
+            Beräknar dina poäng...
+          </p>
+        </div>
+      );
+    }
+    return null;
+  }
+
+  function ShowResults() {
+    if (results) {
+      return <ResultsDisplay results={results} />;
+    }
+    return null;
+  }
+
   return (
     <div>
       <header className="bg-blue-500 h-12 flex items-center">
@@ -22,20 +56,24 @@ function App() {
         </h2>
       </div>
       <section id="main" className="max-w-2xl mx-3 sm:mx-auto">
-        {loading ? (
-          <div className="text-center p-20">
-            <SyncLoader loading={loading} color="#00AAFF" />
-            <p
-              className={`${
-                loading ? "opacity-100" : "opacity-0"
-              } transition-all duration-700 ease-in-out p-10 text-gray-500`}
-            >
-              Beräknar dina poäng...
-            </p>
-          </div>
-        ) : (
-          <QuestionForm setLoading={setLoading} />
-        )}
+        <Transition
+          show={false}
+          enter="transition-opacity duration-500"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-500"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <ShowLoading />
+        </Transition>
+        <ShowResults />
+        <QuestionForm
+          loading={loading}
+          setLoading={setLoading}
+          results={results}
+          setResults={setResults}
+        />
       </section>
     </div>
   );
