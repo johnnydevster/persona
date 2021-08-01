@@ -6,16 +6,14 @@ function ChartDisplay(props) {
   const [chartInstance, setChartInstance] = useState(null);
   const [changeChartType, setChangeChartType] = useState(false);
   const data = {
-    labels: [
-      "Extraversion",
-      "Tillmötesgående",
-      "Samvetsgrannhet",
-      "Neuroticism",
-      "Öppenhet",
-    ],
+    labels: props.results.map((object) => {
+      return object.factorname;
+    }),
     datasets: [
       {
-        data: Object.values(props.results),
+        data: props.results.map((object) => {
+          return object.score;
+        }),
         backgroundColor: "#4ac232",
       },
     ],

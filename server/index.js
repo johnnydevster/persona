@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const tools = require("./utils/tools");
 
 const app = express();
 
@@ -42,13 +43,38 @@ app.post("/results", (req, res) => {
   console.log("Neuroticism score: " + neuroticismScore);
   console.log("Openness score: " + opennessScore);
 
-  res.send({
-    extraversion: extraversionScore,
-    agreeableness: agreeablenessScore,
-    conscientiousness: conscientiousnessScore,
-    neuroticism: neuroticismScore,
-    openness: opennessScore,
-  });
+  res.send([
+    {
+      factorname: "Extraversion",
+      score: extraversionScore,
+      paragraphs: tools.determineParagraphText(1, extraversionScore),
+      average: 56,
+    },
+    {
+      factorname: "Tillmötesgående",
+      score: agreeablenessScore,
+      paragraphs: tools.determineParagraphText(2, agreeablenessScore),
+      average: 64,
+    },
+    {
+      factorname: "Samvetsgrannhet",
+      score: conscientiousnessScore,
+      paragraphs: tools.determineParagraphText(3, conscientiousnessScore),
+      average: 64,
+    },
+    {
+      factorname: "Neuroticism",
+      score: neuroticismScore,
+      paragraphs: tools.determineParagraphText(4, neuroticismScore),
+      average: 45,
+    },
+    {
+      factorname: "Öppenhet",
+      score: opennessScore,
+      paragraphs: tools.determineParagraphText(5, opennessScore),
+      average: 73,
+    },
+  ]);
 });
 
 app.listen(3001, () => console.log("Server running on port 3001."));
