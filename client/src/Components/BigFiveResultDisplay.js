@@ -1,19 +1,20 @@
 function BigFiveResultDisplay(props) {
   return (
     <div>
-      <div className="bg-gray-50 rounded mt-10 p-5 flex justify-between items-center">
-        <h1 className="font-bold text-lg text-gray-600 block">
+      <div
+        className={`${props.headlinecolor} rounded-t mt-10 p-5 flex justify-between items-center`}
+      >
+        <h1 className="font-semibold text-lg text-white block">
           {props.factor}
-          <span className="text-base text-green-500 "> ({props.score}%)</span>
+          <span className="text-base px-1"> ({props.score}%)</span>
         </h1>
-        <h2 className="text-sm text-gray-500 align-middle">
-          Snitt: {props.average}%
-        </h2>
       </div>
-      <div>
+      <div
+        className={`${props.paragraphcolor} rounded-b bg-opacity-50 pt-4 pb-7 px-2`}
+      >
         {props.paragraphs.map((paragraph, i) => {
           return (
-            <p className="p-5" key={i}>
+            <p className="pt-3 px-5 text-gray-700" key={i}>
               {paragraph}
             </p>
           );
