@@ -9,12 +9,28 @@ const headlineColors = [
   "bg-green-500",
 ];
 
+const headlineBgColors = [
+  "bg-yellow-300",
+  "bg-indigo-300",
+  "bg-pink-300",
+  "bg-blue-300",
+  "bg-green-300",
+];
+
 const paragraphColors = [
   "bg-yellow-50",
   "bg-indigo-50",
   "bg-pink-50",
   "bg-blue-50",
   "bg-green-50",
+];
+
+const borderColors = [
+  "border-yellow-300",
+  "border-indigo-300",
+  "border-pink-300",
+  "border-blue-300",
+  "border-green-300",
 ];
 
 function ResultsDisplay(props) {
@@ -31,9 +47,12 @@ function ResultsDisplay(props) {
             factor={result.factorname}
             score={result.score}
             average={result.average}
+            intro={result.intro}
             paragraphs={result.paragraphs}
             headlinecolor={headlineColors[i]}
+            headlineBgColor={headlineBgColors[i]}
             paragraphcolor={paragraphColors[i]}
+            borderColor={borderColors[i]}
           />
         );
       })}

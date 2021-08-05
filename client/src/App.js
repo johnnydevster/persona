@@ -6,15 +6,6 @@ import { Transition } from "@tailwindui/react";
 
 function App() {
   const [results, setResults] = useState();
-  /*
-  const [results, setResults] = useState({
-    agreeableness: 0.34,
-    conscientiousness: 0.78,
-    extraversion: 0.22,
-    neuroticism: 0.84,
-    openness: 0.9, 
-  });
-  */
   const [loading, setLoading] = useState(false);
 
   function ShowLoading() {
