@@ -1,5 +1,16 @@
 import ChartDisplay from "./ChartDisplay";
-import BigFiveResultDisplay from "./BigFiveResultDisplay";
+import BigFiveFactor from "./BigFiveFactor";
+import Relationships from "./Relationships";
+import { useState, useRef } from "react";
+import React from "react";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  PDFViewer,
+} from "@react-pdf/renderer";
 
 const headlineColors = [
   "bg-yellow-500",
@@ -34,16 +45,24 @@ const borderColors = [
 ];
 
 function ResultsDisplay(props) {
+  const [scrollToFactorSummary, setScrollToFactorSummary] = useState(false);
+  const [whichFactor, setWhichFactor] = useState(null);
+
   return (
     <div>
-      <h1 className="text-4xl sm:text-5xl font-bold text-gray-600 px-5 pt-10">
+      <h1 className="text-4xl sm:text-5xl font-bold text-gray-600 px-5 py-14">
         Testresultat
       </h1>
-      <ChartDisplay results={props.results} />
+      <ChartDisplay
+        results={props.results}
+        setScrollToFactorSummary={setScrollToFactorSummary}
+        setWhichFactor={setWhichFactor}
+      />
       {props.results.map((result, i) => {
         return (
-          <BigFiveResultDisplay
+          <BigFiveFactor
             key={result.factorname}
+            id={i}
             factor={result.factorname}
             score={result.score}
             average={result.average}
@@ -53,9 +72,14 @@ function ResultsDisplay(props) {
             headlineBgColor={headlineBgColors[i]}
             paragraphcolor={paragraphColors[i]}
             borderColor={borderColors[i]}
+            scrollToFactorSummary={scrollToFactorSummary}
+            setScrollToFactorSummary={setScrollToFactorSummary}
+            whichFactor={whichFactor}
+            setWhichFactor={setWhichFactor}
           />
         );
       })}
+      <button>Ta test igen</button>
     </div>
   );
 }

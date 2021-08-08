@@ -1,4 +1,16 @@
+import { useRef, useEffect } from "react";
+
 function BigFiveResultDisplay(props) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (props.scrollToFactorSummary && props.id === props.whichFactor) {
+      ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      props.setScrollToFactorSummary(false);
+      props.setWhichFactor(null);
+    }
+  }, [props.scrollToFactorSummary]);
+
   const headline = {
     width: `${props.score}%`,
   };
@@ -9,7 +21,7 @@ function BigFiveResultDisplay(props) {
     backgroundSize: "7.07px 7.07px",
   };
   return (
-    <div className="mt-10">
+    <div ref={ref} className="mt-10 rounded">
       <div className="relative">
         <div
           style={headline}
@@ -27,9 +39,11 @@ function BigFiveResultDisplay(props) {
         ></div>
       </div>
 
-      <div className={` rounded-b bg-opacity-30 pt-6 pb-9 px-2 sm:px-8`}>
+      <div
+        className={`border-l border-r border-b rounded-b bg-opacity-30 pt-6 pb-9 px-2 sm:px-8`}
+      >
         <div
-          className={`my-3 mx-5 py-1 ${props.borderColor} text-sm border-l-4 ${props.headlineBgColor} bg-opacity-10 rounded-r`}
+          className={`my-3 mb-5 mx-5 py-1 ${props.borderColor} text-sm border-l-4 ${props.headlineBgColor} bg-opacity-10 rounded-r`}
         >
           {props.intro.map((intro, i) => {
             return (

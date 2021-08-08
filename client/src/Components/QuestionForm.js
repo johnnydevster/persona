@@ -93,15 +93,6 @@ function QuestionForm(props) {
       </div>
       <div className="mt-10 mb-10">
         {questions.map((question, index) => {
-          /*
-          console.log("Question ID: " + question.id);
-          console.log(
-            `First unanswered: ${unansweredQuestionIds[0] === question.id}`
-          );
-          console.log(
-            "Is unanswered: " + unansweredQuestionIds.includes(question.id)
-          );
-          */
           return (
             <div key={question.id}>
               <Question

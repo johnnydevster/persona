@@ -2,7 +2,17 @@ import { useState, useEffect, useRef } from "react";
 import QuestionForm from "./Components/QuestionForm";
 import SyncLoader from "react-spinners/SyncLoader";
 import ResultsDisplay from "./Components/ResultsDisplay";
+import ChartDisplay from "./Components/ChartDisplay";
 import { Transition } from "@tailwindui/react";
+import React from "react";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  PDFViewer,
+} from "@react-pdf/renderer";
 
 function App() {
   const [results, setResults] = useState();

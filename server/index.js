@@ -7,10 +7,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/home", (req, res) => {
-  res.send("Hello there.");
-});
-
 app.post("/results", (req, res) => {
   let extraversionScore = 0;
   let agreeablenessScore = 0;
@@ -56,6 +52,7 @@ app.post("/results", (req, res) => {
       score: agreeablenessScore,
       intro: tools.getIntro(2),
       paragraphs: tools.determineParagraphText(2, agreeablenessScore),
+      relationships: tools.determineRelationshipText(2, agreeablenessScore),
       average: 64,
     },
     {
@@ -63,6 +60,7 @@ app.post("/results", (req, res) => {
       score: conscientiousnessScore,
       intro: tools.getIntro(3),
       paragraphs: tools.determineParagraphText(3, conscientiousnessScore),
+      relationships: tools.determineRelationshipText(3, conscientiousnessScore),
       average: 64,
     },
     {
@@ -70,6 +68,7 @@ app.post("/results", (req, res) => {
       score: neuroticismScore,
       intro: tools.getIntro(4),
       paragraphs: tools.determineParagraphText(4, neuroticismScore),
+      relationships: tools.determineRelationshipText(4, neuroticismScore),
       average: 45,
     },
     {
