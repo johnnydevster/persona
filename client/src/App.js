@@ -38,7 +38,7 @@ function App() {
 
   function ShowResults() {
     if (results) {
-      return <ResultsDisplay results={results} />;
+      return <ResultsDisplay results={results} setResults={setResults} />;
     }
     return null;
   }

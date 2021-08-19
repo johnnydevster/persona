@@ -155,12 +155,6 @@ function ChartDisplay(props) {
   return (
     <div className="flex flex-col my-5">
       <canvas id="1" ref={chartRef} />
-      <button
-        onClick={() => changeChart()}
-        className="text-white my-5 mx-auto p-5 w-42 bg-blue-500"
-      >
-        Change chart type
-      </button>
     </div>
   );
 }

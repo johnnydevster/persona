@@ -5,10 +5,17 @@ import axios from "axios";
 import xIcon from "../Static/X-icon.png";
 
 function QuestionForm(props) {
-  const [answers, setAnswers] = useState(testAnswers);
+  const [answers, setAnswers] = useState([]);
   const [unansweredQuestionIds, setUnansweredQuestionIds] = useState([]);
   const [firstUnanswered, setFirstUnanswered] = useState();
   const [unansweredWarning, setUnansweredWarning] = useState(false);
+
+  useEffect(() => {
+    if (!props.results) {
+      setUnansweredQuestionIds([]);
+      setFirstUnanswered(null);
+    }
+  }, [props.results]);
 
   useEffect(() => {
     if (unansweredWarning) {
@@ -38,8 +45,14 @@ function QuestionForm(props) {
         answers
       );
       props.setResults(response.data);
+      setAnswers([]);
       props.setLoading(false);
     }
+  }
+
+  function useStockAnswers() {
+    setAnswers(testAnswers);
+    calculateResults();
   }
 
   if (props.loading || props.results) {
@@ -50,35 +63,40 @@ function QuestionForm(props) {
     <div>
       <div className="mt-5 md:mt-8 p-4 sm:p-10 text-gray-600  bg-opacity-70 rounded bg-gray-100">
         <p className="pb-5">
-          Femfaktormodellen är sedan 1990-talet den dominerande modellen inom
-          personlighetspsykologi för att beskriva hur våra personligheter är
-          sammansatta av personlighetsdrag.
-        </p>
-        <p>
-          Den kallas femfaktormodellen för att den bygger på fem
-          faktorer/dimensioner som vart och ett bestämmer ett personlighetsdrag.
+          Femfaktormodellen är den dominerande modellen inom
+          personlighetspsykologi, och är också den modell som anses ha starkast
+          vetenskaplig grund.
         </p>
         <p className="pb-5">
-          Dessa fem personlighetsdrag blir tillsammans en profil eller karta
-          över en individs personlighet (se bild nedan).
+          Den bygger på att vi människor har fem olika personlighetsdrag som
+          tillsammans utgör vår personlighet. Varje faktor kan variera mellan
+          0-100%, vilket betyder att själva testresultatet blir betydligt mer
+          nyanserat i jämförelse med exempelvis{" "}
+          <a href="https://sv.wikipedia.org/wiki/Myers-Briggs_Type_Indicator">
+            Myers-Briggs personlighetstest med 16 personligheter
+          </a>
+          .
         </p>
-        <p>
-          I korta drag kallas de fem faktorerna för{" "}
-          <strong className="text-emphasis">Öppenhet</strong> (eng. Openness),{" "}
-          <strong className="text-emphasis">Ordningsamhet</strong> (eng.
-          Conscientiounsness),{" "}
-          <strong className="text-emphasis">Extrovert drag</strong> (eng.
-          Extraversion),{" "}
-          <strong className="text-emphasis">Tillmötesgående drag</strong> (eng.
-          Agreableness) och{" "}
-          <strong className="text-emphasis">Neurotiskt drag</strong> (eng.
-          Neuroticism). Förkortas ibland på engelska som OCEAN.
+        <p className="pb-5">
+          De fem faktorerna är{" "}
+          <strong className="text-emphasis">Extraversion,</strong>{" "}
+          <strong className="text-emphasis">Tillmötesgående,</strong>{" "}
+          <strong className="text-emphasis">Ordningssamhet,</strong>{" "}
+          <strong className="text-emphasis">Öppenhet,</strong> och{" "}
+          <strong className="text-emphasis">Neuroticism</strong>. Förkortas
+          ibland på engelska som OCEAN.
         </p>
       </div>
-      <div className="transition-all duration-300 ease-in-out  hover:bg-green-200 mt-6 rounded mx-auto bg-green-300 text-center py-3 px-5">
-        <h2 className="text-green-700 hover:text-green-800 font-bold cursor-pointer">
-          Ta testet nedan!
-        </h2>
+      <div
+        onClick={useStockAnswers}
+        className="transition-all duration-300 ease-in-out hover:bg-green-200 mt-6 rounded mx-auto bg-green-300 text-center py-3 px-5 cursor-pointer text-green-700 hover:text-green-800 "
+      >
+        <button className="font-bold">
+          Skippa direkt till ett resultatexempel här
+        </button>
+      </div>
+      <div className="transition-all duration-300 ease-in-out w-full text-center mt-2 text-gray-600 hover:text-gray-700 bg-gray-100 py-3 rounded cursor-pointer hover:bg-gray-50">
+        <button>Eller ta testet nedan</button>
       </div>
       <div className="my-6 mx-auto w-3/4 md:w-full md:my-3 md:flex items-center">
         <div className="md:mr-3 rounded md:w-1/3 p-3 md:p-8 text-center text-indigo-900 bg-indigo-400 bg-opacity-50">

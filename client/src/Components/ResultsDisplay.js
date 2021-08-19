@@ -58,6 +58,15 @@ function ResultsDisplay(props) {
         setScrollToFactorSummary={setScrollToFactorSummary}
         setWhichFactor={setWhichFactor}
       />
+      <div className="flex">
+        <button
+          onClick={() => props.setResults(null)}
+          className="mt-4 mx-auto p-4 bg-blue-500 text-white rounded"
+        >
+          Ta test igen
+        </button>
+      </div>
+
       {props.results.map((result, i) => {
         return (
           <BigFiveFactor
@@ -79,7 +88,14 @@ function ResultsDisplay(props) {
           />
         );
       })}
-      <button>Ta test igen</button>
+      <div className="flex">
+        <button
+          onClick={() => props.setResults(null)}
+          className="my-10 mx-auto p-4 bg-blue-500 text-white rounded"
+        >
+          Ta test igen
+        </button>
+      </div>
     </div>
   );
 }
