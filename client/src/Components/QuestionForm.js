@@ -7,8 +7,21 @@ import xIcon from "../Static/X-icon.png";
 function QuestionForm(props) {
   const [answers, setAnswers] = useState([]);
   const [unansweredQuestionIds, setUnansweredQuestionIds] = useState([]);
+  const [runCalculation, setRunCalculation] = useState(false);
   const [firstUnanswered, setFirstUnanswered] = useState();
   const [unansweredWarning, setUnansweredWarning] = useState(false);
+
+  useEffect(() => {
+    // This useEffect is only here because setting state is asynchronous.
+    // When a user clicks the 'skip to example results'-button, the handleStockAnswers-function is called,
+    // which sets the answers state variable to the example answers array and sets the runCalculation state variable to true.
+    // This useEffect makes sure the answers have time to be set before running the calculateResults-function.
+
+    if (answers && runCalculation) {
+      calculateResults();
+      setRunCalculation(false);
+    }
+  }, [answers, runCalculation]);
 
   useEffect(() => {
     if (!props.results) {
@@ -50,9 +63,9 @@ function QuestionForm(props) {
     }
   }
 
-  function useStockAnswers() {
+  function handleStockAnswers() {
     setAnswers(testAnswers);
-    calculateResults();
+    setRunCalculation(true);
   }
 
   if (props.loading || props.results) {
@@ -88,7 +101,7 @@ function QuestionForm(props) {
         </p>
       </div>
       <div
-        onClick={useStockAnswers}
+        onClick={handleStockAnswers}
         className="transition-all duration-300 ease-in-out hover:bg-green-200 mt-6 rounded mx-auto bg-green-300 text-center py-3 px-5 cursor-pointer text-green-700 hover:text-green-800 "
       >
         <button className="font-bold">
