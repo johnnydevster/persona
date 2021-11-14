@@ -1,11 +1,23 @@
+const functions = require("firebase-functions");
+
+// // Create and Deploy Your First Cloud Functions
+// // https://firebase.google.com/docs/functions/write-firebase-functions
+//
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//   functions.logger.info("Hello logs!", {structuredData: true});
+//   response.send("Hello from Firebase!");
+// });
+
 const express = require("express");
 const cors = require("cors");
 const tools = require("./utils/tools");
+const path = require("path");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "../client/build")));
 
 app.post("/results", (req, res) => {
   let extraversionScore = 0;
@@ -81,6 +93,16 @@ app.post("/results", (req, res) => {
   ]);
 });
 
-const port = process.env.port || 3001;
+/*
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+});
+*/
+
+/*
+const port = process.env.PORT || 3001;
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
+*/
+
+exports.api = functions.https.onRequest(app);

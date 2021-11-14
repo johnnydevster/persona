@@ -54,7 +54,7 @@ function QuestionForm(props) {
     } else {
       props.setLoading(true);
       const response = await axios.post(
-        "http://localhost:3001/results",
+        "https://us-central1-persona-5c2e8.cloudfunctions.net/api/results",
         answers
       );
       props.setResults(response.data);
